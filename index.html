@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Migration Decision Support System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav__content">
+                <h1 class="nav__title">Student Migration Decision Support System</h1>
+                <button class="btn btn--outline btn--sm" id="resetBtn">Reset Preferences</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Welcome Page -->
+    <section id="welcomePage" class="page">
+        <div class="container">
+            <div class="welcome">
+                <div class="welcome__content">
+                    <h2 class="welcome__title">Make Informed Decisions About Studying Abroad</h2>
+                    <p class="welcome__description">
+                        Our decision support system helps you evaluate and compare study destinations 
+                        based on your personal preferences and priorities. Get personalized recommendations 
+                        for the best countries to pursue your education.
+                    </p>
+                    <div class="welcome__features">
+                        <div class="feature">
+                            <h4>Personalized Criteria</h4>
+                            <p>Adjust importance weights based on what matters most to you</p>
+                        </div>
+                        <div class="feature">
+                            <h4>Comprehensive Analysis</h4>
+                            <p>Compare countries across multiple factors including cost, rankings, and opportunities</p>
+                        </div>
+                        <div class="feature">
+                            <h4>Smart Recommendations</h4>
+                            <p>Get ranked suggestions using proven decision-making algorithms</p>
+                        </div>
+                    </div>
+                    <button class="btn btn--primary btn--lg" id="startBtn">Start Decision Process</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Criteria Weight Setting Page -->
+    <section id="preferencesPage" class="page hidden">
+        <div class="container">
+            <div class="preferences">
+                <h2 class="preferences__title">Set Your Preferences</h2>
+                <p class="preferences__description">
+                    Adjust the importance of each factor based on your priorities. 
+                    The total must equal 100%.
+                </p>
+                
+                <div class="preferences__grid">
+                    <div class="criterion-card">
+                        <h4>Cost of Living</h4>
+                        <p class="criterion-desc">Monthly living expenses in USD</p>
+                        <div class="slider-container">
+                            <input type="range" id="cost_of_living" min="0" max="50" value="20" class="slider">
+                            <span class="slider-value" id="cost_of_living_value">20%</span>
+                        </div>
+                    </div>
+
+                    <div class="criterion-card">
+                        <h4>Tuition Fees</h4>
+                        <p class="criterion-desc">Annual tuition fees in USD</p>
+                        <div class="slider-container">
+                            <input type="range" id="tuition_fees" min="0" max="50" value="25" class="slider">
+                            <span class="slider-value" id="tuition_fees_value">25%</span>
+                        </div>
+                    </div>
+
+                    <div class="criterion-card">
+                        <h4>University Ranking</h4>
+                        <p class="criterion-desc">Average university ranking position</p>
+                        <div class="slider-container">
+                            <input type="range" id="university_ranking" min="0" max="50" value="15" class="slider">
+                            <span class="slider-value" id="university_ranking_value">15%</span>
+                        </div>
+                    </div>
+
+                    <div class="criterion-card">
+                        <h4>Language Barrier</h4>
+                        <p class="criterion-desc">Language support and ease (1-5 scale)</p>
+                        <div class="slider-container">
+                            <input type="range" id="language_barrier" min="0" max="50" value="10" class="slider">
+                            <span class="slider-value" id="language_barrier_value">10%</span>
+                        </div>
+                    </div>
+
+                    <div class="criterion-card">
+                        <h4>Visa Processing</h4>
+                        <p class="criterion-desc">Visa application ease (1-5 scale)</p>
+                        <div class="slider-container">
+                            <input type="range" id="visa_processing" min="0" max="50" value="10" class="slider">
+                            <span class="slider-value" id="visa_processing_value">10%</span>
+                        </div>
+                    </div>
+
+                    <div class="criterion-card">
+                        <h4>Job Prospects</h4>
+                        <p class="criterion-desc">Employment opportunities (1-5 scale)</p>
+                        <div class="slider-container">
+                            <input type="range" id="job_prospects" min="0" max="50" value="20" class="slider">
+                            <span class="slider-value" id="job_prospects_value">20%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="total-weight">
+                    <strong>Total Weight: <span id="totalWeight">100%</span></strong>
+                </div>
+
+                <div class="preferences__actions">
+                    <button class="btn btn--primary" id="getRecommendationsBtn">Get Recommendations</button>
+                    <button class="btn btn--secondary" id="backToWelcomeBtn">Back</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Display Page -->
+    <section id="resultsPage" class="page hidden">
+        <div class="container">
+            <div class="results">
+                <h2 class="results__title">Your Recommendations</h2>
+                <p class="results__description">
+                    Based on your preferences, here are the top 5 study destinations ranked by overall score.
+                </p>
+
+                <div class="results__grid">
+                    <div class="recommendations" id="recommendationsList">
+                        <!-- Recommendations will be populated here -->
+                    </div>
+
+                    <div class="results__actions">
+                        <button class="btn btn--primary" id="compareBtn">Compare Top Countries</button>
+                        <button class="btn btn--secondary" id="sensitivityBtn">Sensitivity Analysis</button>
+                        <button class="btn btn--outline" id="backToPreferencesBtn">Adjust Preferences</button>
+                    </div>
+                </div>
+
+                <div class="detailed-table">
+                    <h3>Detailed Comparison</h3>
+                    <div class="table-container">
+                        <table class="comparison-table" id="detailedTable">
+                            <thead>
+                                <tr>
+                                    <th>Country</th>
+                                    <th>Overall Score</th>
+                                    <th>Cost of Living</th>
+                                    <th>Tuition Fees</th>
+                                    <th>University Ranking</th>
+                                    <th>Language Barrier</th>
+                                    <th>Visa Processing</th>
+                                    <th>Job Prospects</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                <!-- Table rows will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Feature -->
+    <section id="comparisonPage" class="page hidden">
+        <div class="container">
+            <div class="comparison">
+                <h2 class="comparison__title">Country Comparison</h2>
+                <p class="comparison__description">
+                    Compare the top countries side-by-side across all criteria.
+                </p>
+
+                <div class="comparison__content">
+                    <div class="comparison__chart">
+                        <canvas id="radarChart" width="400" height="400"></canvas>
+                    </div>
+
+                    <div class="comparison__table">
+                        <table class="comparison-table" id="comparisonTable">
+                            <thead>
+                                <tr>
+                                    <th>Criteria</th>
+                                    <th id="country1Header">Country 1</th>
+                                    <th id="country2Header">Country 2</th>
+                                    <th id="country3Header">Country 3</th>
+                                </tr>
+                            </thead>
+                            <tbody id="comparisonTableBody">
+                                <!-- Comparison data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="comparison__actions">
+                    <button class="btn btn--secondary" id="backToResultsBtn">Back to Results</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sensitivity Analysis Page -->
+    <section id="sensitivityPage" class="page hidden">
+        <div class="container">
+            <div class="sensitivity">
+                <h2 class="sensitivity__title">Sensitivity Analysis</h2>
+                <p class="sensitivity__description">
+                    See how changing the importance of different criteria affects the country rankings.
+                </p>
+
+                <div class="sensitivity__controls">
+                    <div class="form-group">
+                        <label class="form-label" for="sensitivityCriteria">Select Criteria to Analyze:</label>
+                        <select class="form-control" id="sensitivityCriteria">
+                            <option value="cost_of_living">Cost of Living</option>
+                            <option value="tuition_fees">Tuition Fees</option>
+                            <option value="university_ranking">University Ranking</option>
+                            <option value="language_barrier">Language Barrier</option>
+                            <option value="visa_processing">Visa Processing</option>
+                            <option value="job_prospects">Job Prospects</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="sensitivity__chart">
+                    <canvas id="sensitivityChart" width="800" height="400"></canvas>
+                </div>
+
+                <div class="sensitivity__actions">
+                    <button class="btn btn--secondary" id="backToResultsFromSensitivityBtn">Back to Results</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="app.js"></script>
+</body>
+</html>
