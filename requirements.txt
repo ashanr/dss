@@ -1,0 +1,83 @@
+# Flask Framework and Core Dependencies
+Flask==2.3.2
+Flask-SQLAlchemy==3.0.5
+Flask-Login==0.6.2
+Flask-WTF==1.1.1
+Flask-Migrate==4.0.4
+Flask-CORS==4.0.0
+Flask-Mail==0.9.1
+Flask-Limiter==3.3.1
+
+# Database
+SQLAlchemy==2.0.17
+sqlite3
+
+# Data Analysis and Processing
+pandas==2.0.3
+numpy==1.25.0
+scikit-learn==1.3.0
+scipy==1.11.1
+
+# Data Visualization
+plotly==5.15.0
+matplotlib==3.7.1
+seaborn==0.12.2
+
+# Web Forms and Validation
+WTForms==3.0.1
+email-validator==2.0.0
+
+# Security
+bcrypt==4.0.1
+cryptography==41.0.1
+PyJWT==2.8.0
+
+# Utilities
+python-dotenv==1.0.0
+click==8.1.3
+Werkzeug==2.3.6
+Jinja2==3.1.2
+MarkupSafe==2.1.3
+itsdangerous==2.1.2
+
+# API and JSON
+requests==2.31.0
+jsonschema==4.18.0
+
+# Date and Time
+python-dateutil==2.8.2
+
+# File Handling
+openpyxl==3.1.2
+xlsxwriter==3.1.2
+
+# Testing
+pytest==7.4.0
+pytest-flask==1.2.0
+pytest-cov==4.1.0
+
+# Development Tools
+black==23.7.0
+flake8==6.0.0
+isort==5.12.0
+
+# Background Tasks (Optional)
+celery==5.3.1
+redis==4.6.0
+
+# Monitoring and Logging
+Flask-MonitoringDashboard==3.1.0
+python-logging==0.4.9.6
+
+# Additional Utilities
+schedule==1.2.0
+psutil==5.9.5
+tqdm==4.65.0
+
+# Production Server
+gunicorn==21.2.0
+waitress==2.1.2
+
+# Environment and Config
+configparser==5.3.0
+PyYAML==6.0.1
