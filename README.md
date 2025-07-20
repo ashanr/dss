@@ -1,52 +1,45 @@
-# Student Migration Decision Support System
+# Student Migration Decision Support System (DSS) - Flask Backend
 
-This web application helps students make informed decisions about studying abroad by comparing countries based on personal preferences and key criteria.
+A comprehensive web application that helps students make informed decisions about studying abroad by comparing countries based on personal preferences and multiple criteria using advanced decision analysis algorithms.
 
-## Features
+## 🚀 Features
 
-- **Personalized Criteria:** Adjust importance weights for factors like cost, ranking, language, visa, and job prospects.
-- **Comprehensive Analysis:** Compare countries across multiple factors.
-- **Smart Recommendations:** Get ranked suggestions using the SAW (Simple Additive Weighting) algorithm.
-- **Country Comparison:** Visualize top countries side-by-side with radar charts and tables.
-- **Sensitivity Analysis:** See how changing criteria weights affects rankings.
-- **Reset & Navigation:** Easily reset preferences and navigate between pages.
+### Core Functionality
+- **Multi-Criteria Decision Analysis**: Compare countries using 7 key factors
+- **Personalized Recommendations**: Adjust weights based on individual priorities
+- **Advanced Algorithms**: Simple Additive Weighting (SAW) with normalized scoring
+- **Sensitivity Analysis**: Understand how preference changes affect rankings
 
-## Usage
+### Backend Capabilities
+- **RESTful API**: Clean, documented endpoints for all operations
+- **Database Management**: SQLite with automated setup and sample data
+- **Session Tracking**: Save user preferences and analysis history
+- **Data Validation**: Comprehensive input validation and error handling
+- **CORS Support**: Seamless frontend integration
 
-1. Download or clone this repository.
-2. Open `index.html` in your browser.
-3. Set your preferences using sliders and start the decision process.
-4. View recommendations and detailed comparisons.
-5. Use comparison and sensitivity analysis features for deeper insights.
-6. Reset preferences anytime.
+## 🏗️ Architecture
 
-## Running Instructions
 
-No installation or server required.  
-Just double-click `index.html` or right-click and choose "Open with" → your preferred browser.  
-All logic runs in your browser.
+## 📊 Decision Criteria
 
-## Setup
+The system evaluates countries based on:
 
-No installation required. All logic is client-side JavaScript. Chart.js is loaded via CDN.
+| Criterion | Type | Description |
+|-----------|------|-------------|
+| **Cost of Living** | Cost | Lower values preferred |
+| **University Rankings** | Benefit | Higher values preferred |
+| **Language Barrier** | Cost | Lower values preferred |
+| **Visa Difficulty** | Cost | Lower values preferred |
+| **Job Prospects** | Benefit | Higher values preferred |
+| **Climate Score** | Benefit | Higher values preferred |
+| **Safety Index** | Benefit | Higher values preferred |
 
-**Files:**
-- `index.html` — Main UI
-- `style.css` — Styles
-- `app.js` — Application logic
-- `student_migration_data.csv` — Example data (not used directly in the app)
-- `README.md` — This documentation
+## 🛠️ Installation
 
-## Requirements
+### Prerequisites
+- Python 3.8 or higher
+- pip package manager
 
-- Modern web browser
-- Internet connection (for Chart.js CDN)
+### Setup Instructions
 
-## Contributing
-
-Pull requests and suggestions are welcome!  
-For bug reports or feature requests, please open an issue.
-
-## License
-
-MIT License (see LICENSE if provided)
+1. **Clone the repository**
