@@ -43,3 +43,20 @@ The system evaluates countries based on:
 ### Setup Instructions
 
 1. **Clone the repository**
+
+## ▶️ How to Run
+
+After installing dependencies, you can start the Flask backend with:
+
+```bash
+python app.py
+```
+
+By default, the server will run on `http://127.0.0.1:5000/`.  
+You can access the API endpoints using this address.
+
+If you want to enable debug mode for development, use:
+
+```bash
+python app.py --debug
+```
