@@ -1,19 +1,16 @@
-version: '3.8'
-
 services:
-  # Main DSS Application (Frontend + Backend)
-  dss-app:
+  # Flask Backend API
+  dss-backend:
     build:
-      context: .
+      context: ./api
       dockerfile: Dockerfile
-    container_name: dss-application
+    container_name: dss-api
     ports:
       - "5000:5000"
     environment:
       - FLASK_ENV=production
       - FLASK_DEBUG=False
       - DATABASE_URL=sqlite:///data/dss.db
-      - CORS_ORIGINS=http://localhost:80,http://localhost:3000
     volumes:
       - ./data:/app/data
       - ./logs:/app/logs
@@ -25,41 +22,36 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-      start_period: 40s
 
-  # Nginx Reverse Proxy
+  # React Frontend
+  dss-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: dss-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - dss-backend
+    networks:
+      - dss-network
+    restart: unless-stopped
+
+  # Nginx API Gateway and Load Balancer
   nginx:
     image: nginx:alpine
     container_name: dss-nginx
     ports:
       - "80:80"
-      - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./ssl:/etc/nginx/ssl:ro
     depends_on:
-      - dss-app
+      - dss-backend
+      - dss-frontend
     networks:
       - dss-network
     restart: unless-stopped
-
-  # Redis for caching (optional)
-  redis:
-    image: redis:7-alpine
-    container_name: dss-redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis-data:/data
-    networks:
-      - dss-network
-    restart: unless-stopped
-    command: redis-server --appendonly yes
 
 networks:
   dss-network:
     driver: bridge
-
-volumes:
-  redis-data:
-    driver: local
