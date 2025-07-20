@@ -1,34 +1,49 @@
 version: '3.8'
 
 services:
-  # Main Flask Application
-  dss-backend:
+  # Main DSS Application (Frontend + Backend)
+  dss-app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: dss-flask-app
+    container_name: dss-application
     ports:
       - "5000:5000"
     environment:
       - FLASK_ENV=production
       - FLASK_DEBUG=False
       - DATABASE_URL=sqlite:///data/dss.db
+      - CORS_ORIGINS=http://localhost:80,http://localhost:3000
     volumes:
       - ./data:/app/data
       - ./logs:/app/logs
     networks:
       - dss-network
     restart: unless-stopped
-    depends_on:
-      - redis
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 40s
 
-  # Redis for caching (optional but recommended)
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: dss-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - dss-app
+    networks:
+      - dss-network
+    restart: unless-stopped
+
+  # Redis for caching (optional)
   redis:
     image: redis:7-alpine
     container_name: dss-redis
@@ -40,22 +55,6 @@ services:
       - dss-network
     restart: unless-stopped
     command: redis-server --appendonly yes
-
-  # Nginx reverse proxy (optional for production)
-  nginx:
-    image: nginx:alpine
-    container_name: dss-nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./ssl:/etc/nginx/ssl:ro
-    networks:
-      - dss-network
-    depends_on:
-      - dss-backend
-    restart: unless-stopped
 
 networks:
   dss-network:
