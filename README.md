@@ -13,16 +13,18 @@ This web application helps students make informed decisions about studying abroa
 
 ## Usage
 
-1. Open `index.html` in your browser.
-2. Start the decision process and set your preferences using sliders.
-3. View recommendations and detailed comparisons.
-4. Use comparison and sensitivity analysis features for deeper insights.
-5. Reset preferences anytime.
+1. Download or clone this repository.
+2. Open `index.html` in your browser.
+3. Set your preferences using sliders and start the decision process.
+4. View recommendations and detailed comparisons.
+5. Use comparison and sensitivity analysis features for deeper insights.
+6. Reset preferences anytime.
 
 ## Running Instructions
 
-Simply double-click `index.html` or right-click and choose "Open with" → your preferred browser.  
-No server or installation required; all logic runs in your browser.
+No installation or server required.  
+Just double-click `index.html` or right-click and choose "Open with" → your preferred browser.  
+All logic runs in your browser.
 
 ## Setup
 
@@ -39,6 +41,11 @@ No installation required. All logic is client-side JavaScript. Chart.js is loade
 
 - Modern web browser
 - Internet connection (for Chart.js CDN)
+
+## Contributing
+
+Pull requests and suggestions are welcome!  
+For bug reports or feature requests, please open an issue.
 
 ## License
 
